@@ -35,3 +35,20 @@ O workflow em `.github/workflows/cd.yml` empacota a biblioteca `Calculator` em u
 - Em pull requests, apenas builda e empacota o projeto como validação (artefato disponível para download na execução do workflow).
 - Em pushes para `main`, além de empacotar, publica o pacote no GitHub Packages.
 
+## Docker
+
+O `Dockerfile` na raiz do repositório builda a solução e roda a suíte de testes da `Calculator` dentro do container.
+
+Build da imagem:
+
+```
+docker build -t dotnet-cicd-demo .
+```
+
+Rodar o container (executa os testes e mostra o resultado):
+
+```
+docker run --rm dotnet-cicd-demo
+```
+
+
