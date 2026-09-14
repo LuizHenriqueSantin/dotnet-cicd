@@ -13,4 +13,14 @@ public class CalculatorTests
 
         Assert.Equal(5, result);
     }
+
+    [Fact]
+    public void Subtract_ReturnsDifference()
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.Subtract(5, 3);
+
+        Assert.Equal(2, result);
+    }
 }
