@@ -23,3 +23,15 @@ dotnet test
 ## CI
 
 O workflow em `.github/workflows/ci.yml` builda e roda os testes a cada push e pull request para `main`.
+
+## Qualidade de código
+
+O workflow em `.github/workflows/code-quality.yml` verifica a formatação do código com `dotnet format --verify-no-changes` a cada push e pull request para `main`.
+
+## CD
+
+O workflow em `.github/workflows/cd.yml` empacota a biblioteca `Calculator` em um pacote NuGet:
+
+- Em pull requests, apenas builda e empacota o projeto como validação (artefato disponível para download na execução do workflow).
+- Em pushes para `main`, além de empacotar, publica o pacote no GitHub Packages.
+
