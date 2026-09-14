@@ -33,4 +33,22 @@ public class CalculatorTests
 
         Assert.Equal(12, result);
     }
+
+    [Fact]
+    public void Divide_ReturnsQuotient()
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.Divide(10, 2);
+
+        Assert.Equal(5, result);
+    }
+
+    [Fact]
+    public void Divide_ByZero_Throws()
+    {
+        var calculator = new Calculator();
+
+        Assert.Throws<DivideByZeroException>(() => calculator.Divide(10, 0));
+    }
 }
