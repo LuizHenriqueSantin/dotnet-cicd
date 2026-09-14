@@ -23,4 +23,14 @@ public class CalculatorTests
 
         Assert.Equal(2, result);
     }
+
+    [Fact]
+    public void Multiply_ReturnsProduct()
+    {
+        var calculator = new Calculator();
+
+        var result = calculator.Multiply(4, 3);
+
+        Assert.Equal(12, result);
+    }
 }
