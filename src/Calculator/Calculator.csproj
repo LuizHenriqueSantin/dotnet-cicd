@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>LuizHenriqueSantin.Calculator</PackageId>
+    <Authors>LuizHenriqueSantin</Authors>
+    <Description>Biblioteca de calculadora usada como demonstracao de CI/CD.</Description>
+    <RepositoryUrl>https://github.com/LuizHenriqueSantin/dotnet-cicd</RepositoryUrl>
+    <PackageVersion>1.0.0</PackageVersion>
+  </PropertyGroup>
+
 </Project>
