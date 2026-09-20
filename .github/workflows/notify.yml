@@ -1,0 +1,55 @@
+name: Notify
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+jobs:
+  notify-discord:
+    if: github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          COMMIT_MESSAGE: ${{ github.event.workflow_run.head_commit.message }}
+          COMMIT_SHA: ${{ github.event.workflow_run.head_sha }}
+          COMMIT_AUTHOR: ${{ github.event.workflow_run.head_commit.author.name }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          if [ "$CONCLUSION" = "success" ]; then
+            COLOR=3066993
+            STATUS_EMOJI="✅"
+          else
+            COLOR=15158332
+            STATUS_EMOJI="❌"
+          fi
+
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+          TITLE="$STATUS_EMOJI CI $CONCLUSION na branch main"
+
+          PAYLOAD=$(jq -n \
+            --arg title "$TITLE" \
+            --arg description "$COMMIT_MESSAGE" \
+            --arg url "$RUN_URL" \
+            --arg author "$COMMIT_AUTHOR" \
+            --arg sha "$SHORT_SHA" \
+            --argjson color "$COLOR" \
+            '{
+              embeds: [{
+                title: $title,
+                description: $description,
+                url: $url,
+                color: $color,
+                fields: [
+                  { name: "Autor", value: $author, inline: true },
+                  { name: "Commit", value: $sha, inline: true }
+                ]
+              }]
+            }')
+
+          curl -sf -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD"

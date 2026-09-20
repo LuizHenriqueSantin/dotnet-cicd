@@ -35,6 +35,16 @@ O workflow em `.github/workflows/cd.yml` empacota a biblioteca `Calculator` em u
 - Em pull requests, apenas builda e empacota o projeto como validação (artefato disponível para download na execução do workflow).
 - Em pushes para `main`, além de empacotar, publica o pacote no GitHub Packages.
 
+## Alertas
+
+O workflow em `.github/workflows/notify.yml` envia um alerta para o Discord sempre que o workflow de CI termina (sucesso ou falha) em um commit ou merge na branch `main`. A mensagem inclui o status, o autor, o commit e o link para a execução.
+
+Para habilitar, crie um webhook no canal do Discord desejado (Configurações do canal → Integrações → Webhooks → Novo Webhook) e cadastre a URL como secret do repositório:
+
+1. No GitHub, vá em `Settings` → `Secrets and variables` → `Actions` → `New repository secret`.
+2. Nome: `DISCORD_WEBHOOK_URL`.
+3. Valor: a URL do webhook do Discord.
+
 ## Docker
 
 O `Dockerfile` na raiz do repositório builda a `Calculator.Api` (Web API mínima que expõe a biblioteca `Calculator`) e a executa dentro de um container.
